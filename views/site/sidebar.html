@@ -1,0 +1,117 @@
+<!-- Sidebar -->
+			<div class="col-md-10 col-lg-4 p-b-30">
+				<div class="p-l-10 p-rl-0-sr991 p-t-70">
+					<!-- Category -->
+					<div class="p-b-60">
+						<div class="how2 how2-cl4 flex-s-c">
+							<h3 class="f1-m-2 cl3 tab01-title">
+								Categoria
+							</h3>
+						</div>
+
+						<ul class="p-t-35">
+							
+                            {% for category in sidebar.categories %}
+                            <li class="how-bor3 p-rl-4">
+								<a href="/category/{{category.name}}" class="dis-block f1-s-10 text-uppercase cl2 hov-cl10 trans-03 p-tb-13">
+									{{category.name}}
+								</a>
+							</li>
+                            {% endfor %}
+						</ul>
+					</div>
+
+					<!-- Popular Posts -->
+					<div class="p-b-30">
+						<div class="how2 how2-cl4 flex-s-c">
+							<h3 class="f1-m-2 cl3 tab01-title">
+								Post Populares
+							</h3>
+						</div>
+
+						<ul class="p-t-35">
+							
+                            {% for popularPost in sidebar.popularPosts %}
+                            <li class="flex-wr-sb-s p-b-30">
+								<a href="#" class="size-w-10 wrap-pic-w hov1 trans-03">
+									<img src="{{popularPost.image}}" alt="IMG">
+								</a>
+
+								<div class="size-w-11">
+									<h6 class="p-b-4">
+										<a href="/article/{{popularPost.url}}" class="f1-s-5 cl3 hov-cl10 trans-03">
+											{{popularPost.title}}
+										</a>
+									</h6>
+
+									<span class="cl8 txt-center p-b-24">
+										<a href="/user/{{popularPost.username}}" class="f1-s-6 cl8 hov-cl10 trans-03">
+											{{popularPost.username}}
+										</a>
+
+										<span class="f1-s-3 m-rl-3">
+											-
+										</span>
+
+										<span class="f1-s-3">
+											{{popularPost.created| date("d/m/Y")}}
+										</span>
+									</span>
+								</div>
+							</li>
+                            {% endfor %}
+						</ul>
+					</div>
+
+					<!-- Tag -->
+					<div>
+						<div class="how2 how2-cl4 flex-s-c m-b-30">
+							<h3 class="f1-m-2 cl3 tab01-title">
+								Tags
+							</h3>
+						</div>
+
+						<div class="flex-wr-s-s m-rl--5">
+							<a href="#"
+								class="flex-c-c size-h-2 bo-1-rad-20 bocl12 f1-s-1 cl8 hov-btn2 trans-03 p-rl-20 p-tb-5 m-all-5">
+								Fashion
+							</a>
+
+							<a href="#"
+								class="flex-c-c size-h-2 bo-1-rad-20 bocl12 f1-s-1 cl8 hov-btn2 trans-03 p-rl-20 p-tb-5 m-all-5">
+								Lifestyle
+							</a>
+
+							<a href="#"
+								class="flex-c-c size-h-2 bo-1-rad-20 bocl12 f1-s-1 cl8 hov-btn2 trans-03 p-rl-20 p-tb-5 m-all-5">
+								Denim
+							</a>
+
+							<a href="#"
+								class="flex-c-c size-h-2 bo-1-rad-20 bocl12 f1-s-1 cl8 hov-btn2 trans-03 p-rl-20 p-tb-5 m-all-5">
+								Streetstyle
+							</a>
+
+							<a href="#"
+								class="flex-c-c size-h-2 bo-1-rad-20 bocl12 f1-s-1 cl8 hov-btn2 trans-03 p-rl-20 p-tb-5 m-all-5">
+								Crafts
+							</a>
+
+							<a href="#"
+								class="flex-c-c size-h-2 bo-1-rad-20 bocl12 f1-s-1 cl8 hov-btn2 trans-03 p-rl-20 p-tb-5 m-all-5">
+								Magazine
+							</a>
+
+							<a href="#"
+								class="flex-c-c size-h-2 bo-1-rad-20 bocl12 f1-s-1 cl8 hov-btn2 trans-03 p-rl-20 p-tb-5 m-all-5">
+								News
+							</a>
+
+							<a href="#"
+								class="flex-c-c size-h-2 bo-1-rad-20 bocl12 f1-s-1 cl8 hov-btn2 trans-03 p-rl-20 p-tb-5 m-all-5">
+								Blogs
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
