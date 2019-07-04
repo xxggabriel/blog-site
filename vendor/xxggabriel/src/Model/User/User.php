@@ -93,13 +93,16 @@ class User
         $this->setUsername($username);
         $this->setEmail($email);
 
-        $this->sql->query("CALL create_user(:name, :username, :email, :status)", [
+        $resultUser = $this->sql->query("CALL create_user(:name, :username, :email, :status)", [
             ":name" => $this->getName(),
             ":username" => $this->getUsername(),
             ":email" => $this->getEmail(),
             ":status" => 0 // Sem senha
         ]);
-        
+        if($resultUser == false){
+            throw new \Exception("Não foi possivel criar o usuário.", 500);
+            
+        }
         $idUser = $this->sql->select("SELECT idUser FROM User WHERE username = :username",[
             ":username" => $username
         ])[0]["idUser"];
@@ -108,10 +111,11 @@ class User
         
     }
 
-    public function read($idUser = null)
+    public function read($idUser = null, $limit = 10)
     {
-        return $this->sql->select("CALL read_user(:idUser)",[
-            ":idUser" => $idUser
+        return $this->sql->select("CALL read_user(:idUser, :limit)",[
+            ":idUser" => $idUser,
+            ":limit" => $limit
         ]);
     }
 
