@@ -7,15 +7,13 @@ class ExceptionWeb
 
     public static function setError($message = null, $code = null, $status = false)
     {
-        $error = [
+        return [
             "error" => [
                 "message" => empty($message)? ExceptionWeb::listErrorMessages()[$code] : $message,
                 "code" => $code,
                 "status" => $status
             ]
         ];
-        $page = new \App\Controller\Page\Page();
-        $page->setTpl("error/error.html", $error);
         
     }
 
