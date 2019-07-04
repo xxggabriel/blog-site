@@ -59,7 +59,7 @@ class Sql
     {
         $stmt = $this->conn->prepare($rawQuery);
         $this->setParams($stmt, $data);
-        return var_dump($stmt->execute());
+        return $stmt->execute();
     }
 
 
