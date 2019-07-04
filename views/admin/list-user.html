@@ -1,0 +1,142 @@
+
+        <!-- ============================================================== -->
+        <!-- pageheader  -->
+        <!-- ============================================================== -->
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="page-header">
+                    <h2 class="pageheader-title">Lista de usuários </h2>
+                    <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel
+                        mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+                    <div class="page-breadcrumb">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Usuários</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="row">
+
+
+
+                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5 class="card-header">Usuários</h5>
+                                    
+                                    {% if success is defined %}
+                                        <div id="msg-alert"  class="alert alert-success">{{success.message}}</div>
+                                    
+                                    {% elseif error is defined %}
+                                        <div id="msg-alert"  class="alert alert-danger">{{error.message}}</div>
+                                    {% elseif alert is defined %}
+                                        <div id="msg-alert"  class="alert alert-info">{{alert.message}}</div>
+                                    {% else %}
+
+                                    <div id="msg-alert" style="display: none;" class="alert alert-info"></div>
+                                    <script>
+                                            $('#msg-alert').hide();
+                                            var query = location.search.slice(1);
+                                            var partes = query.split('&');
+                                            var data = {};
+                                            partes.forEach(function (parte) {
+                                                var chaveValor = parte.split('=');
+                                                var chave = chaveValor[0];
+                                                var valor = chaveValor[1];
+                                                data[chave] = valor;
+                                            });
+            
+                                            console.log(data.msg); 
+                                        if(data.msg){
+                                            $('#msg-alert').show().html(data.msg);;
+                                        }
+                                        if(data.status){
+                                            $('#msg-alert').removeClass('alert-info').addClass('alert-'+data.status)
+                                        }
+                                    </script>  
+                                    {% endif %}
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered first">
+                                            <thead>
+                                                <tr>
+                                                    <th>Status</th>
+                                                    <th>Nome</th>
+                                                    <th>Username</th>
+                                                    <th>email</th>
+                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for user in users %}    
+                                                <tr>
+                                                    
+                                                    <td>{% if user.status > 0 %}
+                                                            <span class="badge-dot badge-success mr-1"></span>
+                                                            Ativado
+                                                        {% else %}
+                                                            <span class="badge-dot badge-danger mr-1"></span>
+                                                            Não Ativado
+                                                        {% endif %}
+                                                    </td>
+                                                    <td>{{user.name}}</td>
+                                                    <td>{{user.username}}</td>
+                                                    <td>{{user.email}}</td>
+                                                    <td>
+                                                        <a href="{{ path_for('show-user', {'username' : user.username}) }}" class="text-white"><button class="btn btn-sm bg-primary">Editar</button></a>
+                                                    </td>
+                                                </tr>
+                                                {% endfor %}
+                                                
+                                                
+
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th>Status</th>
+                                                    <th>Nome</th>
+                                                    <th>Username</th>
+                                                    <th>email</th>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- footer -->
+<!-- ============================================================== -->
+<div class="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                Copyright © 2018 Concept. All rights reserved. Dashboard by <a
+                    href="https://colorlib.com/wp/">Colorlib</a>.
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                <div class="text-md-right footer-links d-none d-sm-block">
+                    <a href="javascript: void(0);">About</a>
+                    <a href="javascript: void(0);">Support</a>
+                    <a href="javascript: void(0);">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================================================== -->
+<!-- end footer -->
+<!-- ============================================================== -->
+</div>

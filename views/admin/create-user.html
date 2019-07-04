@@ -1,0 +1,78 @@
+<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+    <div class="page-header">
+        <h2 class="pageheader-title">Criar de usuário </h2>
+        <p class="pageheader-text">Nulla euismod urna eros, sit amet scelerisque torton lectus vel
+            mauris facilisis faucibus at enim quis massa lobortis rutrum.</p>
+        <div class="page-breadcrumb">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Dashboard</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Usuário</li>
+                    <li class="breadcrumb-item active" aria-current="page">Criar</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Criar Usuário</h5>
+                        {% if error is defined%}
+                            <div id="msg-alert"  class="alert alert-danger">{{error.message}}</div>
+                        {% else %}
+                        <div id="msg-alert" style="display: none;" class="alert alert-danger"></div>
+                        <script>
+                                $('#msg-alert').hide();
+                                var query = location.search.slice(1);
+                                var partes = query.split('&');
+                                var data = {};
+                                partes.forEach(function (parte) {
+                                    var chaveValor = parte.split('=');
+                                    var chave = chaveValor[0];
+                                    var valor = chaveValor[1];
+                                    data[chave] = valor;
+                                });
+
+                                console.log(data.msg); 
+                            if(data.msg){
+                                $('#msg-alert').show().html(data.msg);
+                            }
+                        </script>    
+                        {% endif %}
+                                            
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        <form action="{{path_for('create-user-post')}}" method="POST">
+                            <div class="form-group">
+                                <label for="Nome" class="col-form-label">Nome:</label>
+                                <input type="text" name="name" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Nome de usuário">Nome de usuário:</label>
+                                <input type="texts" name="username" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" name="email" placeholder="name@example.com" required class="form-control">
+                                <p>Nós nunca vamos compartilhar seu e-mail com mais ninguém.</p>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="Senha">Senha:</label>
+                                <input type="password" name="password" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-sm bg-success">Cadastrar</button>
+                        </form>
+                    </div>
+                    <div class="card-footer">
+                            <a href="path_for('list-users')"><button class="btn btn-sm bg-danger">Cancelar</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
