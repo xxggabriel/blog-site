@@ -15,7 +15,8 @@ class Article
             $image,
             $url,
             $tags,
-            $category;
+            $idCategory,
+            $nameCategory;
 
 
     public function __construct()
@@ -45,6 +46,19 @@ class Article
             ":idCategory" => $this->getIdCategory()
         ]);
         
+    }
+
+    public function createCategory(string $name)
+    {
+        $this->setNameCategory($name, true);
+        $savedCategory = $this->sql->query("CALL create_category_article(:name)", [
+            ":name" => $this->getNameCategory()
+        ]);
+
+        if(!$savedCategory)
+            throw new \Exception("Não foi possivel salvar a categoria", 1);
+        
+        return true;
     }
 
     public function read($url = null, $limit = 10)
@@ -99,8 +113,20 @@ class Article
         return $this->idArticle;
     }
 
-    public function setIdArticle($idArticle)
+    public function setIdArticle(int $idArticle, bool $checkIdArticle = false)
     {
+        if(empty($idArticle))
+            throw new \Exception("ID do artigo, não informado.", 404);
+        
+        if($checkIdArticle){
+            $resultIdUser = $this->sql->select("SELECT idArticle FROM Article WHERE idArticle = :idArticle", [
+                ":idArticle" => $idArticle
+            ])[0]["idArticle"];
+
+            if(!$resultIdUser)
+                throw new \Exception("ID do artigo, não encontrado.", 404);
+                
+        }
         $this->idArticle = $idArticle;
 
         return $this;
@@ -114,11 +140,14 @@ class Article
 
     public function setTitle($title)
     {
+        if(empty($title))
+            throw new \Exception("Titulo do artigo, não informado", 404);
+            
         if(strlen($title) > 100){
             throw new \Exception("O titulo, não pode utrapassar 100 caracteres.", 403);
             
         }
-        $this->title = empty($title) ? null : $title;
+        $this->title = $title;
 
     }
  
@@ -158,12 +187,15 @@ class Article
 
     public function setUrl($url)
     {
+        if(empty($url))
+            throw new \Exception("URL não informada;", 404);
+            
         if(strlen($url) > 100){
             throw new \Exception("A url, não pode utrapassar 100 caracteres.", 403);
             
         }
 
-        $this->url = empty($url) ? null : $url;
+        $this->url = $url;
 
     }
 
@@ -187,9 +219,42 @@ class Article
     {
         return $this->category;
     }
-    public function setIdCategory(int $category)
+    public function setIdCategory(int $idCategory, $checkIdCategory = false)
     {
-        $this->category = $category;
+
+        if($checkIdCategory){
+            $resultIdCategory = $this->sql->select("SELECT idCategorry FROM ArticleCategory WHERE idCategory = :idCategory", [
+                ":idCategory" => $idCategory
+            ])[0]["idCategory"];
+
+            if($resultIdCategory)
+                throw new \Exception("ID da categoria não existe.", 404);
+                
+        }
+
+        $this->idCategory = $idCategory;
+
+    }
+
+             
+    public function getNameCategory()
+    {
+        return $this->nameCategory;
+    }
+
+    
+    public function setNameCategory(string $nameCategory, $checkNameCategory = false)
+    {
+        if($checkNameCategory){  
+            $existeName = $this->sql->select('SELECT name ArticleCategory WHERE name = :name', [
+                ":name" => $nameCategory
+            ])[0]["name"];
+
+            if($existeName)
+                throw new \Exception("Nome da categoria já exite, tente utilizar outra.", 403);
+        }
+            
+        $this->nameCategory = $nameCategory;
 
     }
 }
