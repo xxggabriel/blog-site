@@ -9,7 +9,8 @@ class Article
 {
 
     protected $sql;
-    private $title,
+    private $idArticle,
+            $title,
             $description,
             $image,
             $url,
@@ -17,6 +18,93 @@ class Article
             $category;
 
 
+    public function __construct()
+    {
+        $this->sql = new Sql();
+    }
+
+    public function create(int $idUser, $title, $description, $body, $image, $url, $tags, int $idCategory)
+    {
+
+        $this->setTitle($title);
+        $this->setDescription($description);
+        $this->setImage($image);
+        $this->setUrl($url);
+        $this->setTags($tags);
+        $this->setIdCategory($idCategory);
+
+        
+        return $this->sql->query("CALL create_article(:idUser, :title, :description, :body, :image, :url, :tags, :idCategory)", [
+            ":idUser" => $idUser,
+            ":title" => $this->getTitle(),
+            ":description" => $this->getDescription(),
+            ":body" => $body,
+            ":image" => $this->getImage(),
+            ":url" => $this->getUrl(),
+            ":tags" => $this->getTags(),
+            ":idCategory" => $this->getIdCategory()
+        ]);
+        
+    }
+
+    public function read($url = null, $limit = 10)
+    {
+        return $this->sql->select("CALL read_article(:url, :limit)", [
+            ":url" => $url,
+            ":limit" => $limit
+        ]);
+    }
+
+    public function showShortArticle(int $limit = 10)
+    {
+        return $this->sql->select("CALL show_short_article(:limit)", [
+            ":limit" => $limit
+        ]);
+    }
+
+    public function popularPosts($limit = 10)
+    {
+        return $this->sql->select("CALL popular_posts(:limit)",[
+            ":limit" => $limit
+        ]);
+    }
+
+    public function readCategory(int $limit = 5)
+    {
+        return $this->sql->select("CALL read_category_article(:limit)",[
+            ":limit" => $limit
+        ]);
+    }
+
+    public function update(int $idArticle, array $data)
+    {
+        foreach ($data as $key => $value) {
+            $this->sql->query("UPDATE Article SET $key = :value WHERE idArticle = :idArticle", [
+                ":value" => $value,
+                ":idArticle" => $idArticle
+            ]);
+        }
+    }
+
+    public function delete($idArticle)
+    {
+        $this->sql->query("DELETE FROM Article WHERE idArticle = :idArticle", [
+            ":idArticle" => $idArticle
+        ]);
+    }
+
+
+    public function getIdArticle()
+    {
+        return $this->idArticle;
+    }
+
+    public function setIdArticle($idArticle)
+    {
+        $this->idArticle = $idArticle;
+
+        return $this;
+    }
 
     public function getTitle()
     {
@@ -104,82 +192,4 @@ class Article
         $this->category = $category;
 
     }
-
-    public function __construct()
-    {
-        $this->sql = new Sql();
-    }
-
-    public function create(int $idUser, $title, $description, $body, $image, $url, $tags, int $idCategory)
-    {
-
-        $this->setTitle($title);
-        $this->setDescription($description);
-        $this->setImage($image);
-        $this->setUrl($url);
-        $this->setTags($tags);
-        $this->setIdCategory($idCategory);
-
-        
-        return $this->sql->query("CALL create_article(:idUser, :title, :description, :body, :image, :url, :tags, :idCategory)", [
-            ":idUser" => $idUser,
-            ":title" => $this->getTitle(),
-            ":description" => $this->getDescription(),
-            ":body" => $body,
-            ":image" => $this->getImage(),
-            ":url" => $this->getUrl(),
-            ":tags" => $this->getTags(),
-            ":idCategory" => $this->getIdCategory()
-        ]);
-        
-    }
-
-    public function read($url = null, $limit = 10)
-    {
-        return $this->sql->select("CALL read_article(:url, :limit)", [
-            ":url" => $url,
-            ":limit" => $limit
-        ]);
-    }
-
-    public function showShortArticle(int $limit = 10)
-    {
-        return $this->sql->select("CALL show_short_article(:limit)", [
-            ":limit" => $limit
-        ]);
-    }
-
-    public function popularPosts($limit = 10)
-    {
-        return $this->sql->select("CALL popular_posts(:limit)",[
-            ":limit" => $limit
-        ]);
-    }
-
-    public function readCategory(int $limit = 5)
-    {
-        return $this->sql->select("CALL read_category_article(:limit)",[
-            ":limit" => $limit
-        ]);
-    }
-
-    public function update(int $idArticle, array $data)
-    {
-        foreach ($data as $key => $value) {
-            $this->sql->query("UPDATE Article SET $key = :value WHERE idArticle = :idArticle", [
-                ":value" => $value,
-                ":idArticle" => $idArticle
-            ]);
-        }
-    }
-
-    public function delete($idArticle)
-    {
-        $this->sql->query("DELETE FROM Article WHERE idArticle = :idArticle", [
-            ":idArticle" => $idArticle
-        ]);
-    }
-
-    
-    
 }
