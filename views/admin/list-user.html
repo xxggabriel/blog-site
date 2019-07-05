@@ -49,7 +49,7 @@
             
                                             console.log(data.msg); 
                                         if(data.msg){
-                                            $('#msg-alert').show().html(data.msg);;
+                                            $('#msg-alert').show().html(decodeURIComponent(data.msg));;
                                         }
                                         if(data.status){
                                             $('#msg-alert').removeClass('alert-info').addClass('alert-'+data.status)
