@@ -139,6 +139,9 @@ class User
 
     public function setIdUser(int $idUser, $checkExists = false)
     {
+        if(empty($idUser))
+            throw new \Exception("ID so usuário não informado.", 404);
+            
         if($checkExists){
             
             $user = $this->read($idUser, 1)[0];
@@ -161,7 +164,7 @@ class User
     public function setName($name)
     {
         if(empty($name))
-            throw new \Exception("Nome não informado.", 403);
+            throw new \Exception("Nome não informado.", 404);
         
         if(strlen($name) > 50)
             throw new \Exception("Nome grande de mais, tente abreviar.", 403);
