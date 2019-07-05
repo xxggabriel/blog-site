@@ -4,26 +4,12 @@ namespace App\Model\User;
 
 use App\Model\Sql;
 
-class Api
+class Api extends User
 {
 
     protected $sql;
-    private $idUser,
-            $userId,
+    private $userId,
             $token;
-
-    public function getIdUser()
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(int $idUser)
-    {
-        if(empty($idUser))
-            throw new \Exception("ID do usuário, não informado.", 403);
-            
-        $this->idUser = $idUser;
-    }
 
     public function getUserId()
     {
